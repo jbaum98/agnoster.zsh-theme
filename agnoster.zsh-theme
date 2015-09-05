@@ -1,10 +1,11 @@
 # Original theme https://github.com/agnoster zsh theme
+# Credit to smileart https://gist.github.com/smileart/3750104
 
 ZSH_THEME_GIT_PROMPT_DIRTY='±'
 
 function _git_prompt_info() {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
-  echo "${ref/refs\/heads\//⭠ }$(parse_git_dirty)"
+  echo "${ref/refs\/heads\// }$(parse_git_dirty)"
 }
 
 function _git_info() {
@@ -19,9 +20,9 @@ function _git_info() {
         BG_COLOR=red
         FG_COLOR=white
     fi
-    echo "%{%K{$BG_COLOR}%}⮀%{%F{$FG_COLOR}%} $(_git_prompt_info) %{%F{$BG_COLOR}%K{blue}%}⮀"
+    echo "%{%K{$BG_COLOR}%}%{%F{$FG_COLOR}%} $(_git_prompt_info) %{%F{$BG_COLOR}%K{blue}%}"
   else
-    echo "%{%K{blue}%}⮀"
+    echo "%{%K{blue}%}"
   fi
 }
 
@@ -31,8 +32,8 @@ function virtualenv_info {
 
 PROMPT_HOST='%{%b%F{gray}%K{black}%} %(?.%{%F{green}%}✔.%{%F{red}%}✘)%{%F{yellow}%} %n %{%F{black}%}'
 PROMPT_DIR='%{%F{white}%} %~%  '
-PROMPT_SU='%(!.%{%k%F{blue}%K{black}%}⮀%{%F{yellow}%} ⚡ %{%k%F{black}%}.%{%k%F{blue}%})⮀%{%f%k%b%}'
+PROMPT_SU='%(!.%{%k%F{blue}%K{black}%}⮀%{%F{yellow}%} ⚡ %{%k%F{black}%}.%{%k%F{blue}%})%{%f%k%b%}'
 
 PROMPT='%{%f%b%k%}$PROMPT_HOST$(_git_info)$PROMPT_DIR$PROMPT_SU
-$(virtualenv_info)❯ '
+$(virtualenv_info)%1{❯%} '
 RPROMPT='%{$fg[green]%}[%*]%{$reset_color%}'
